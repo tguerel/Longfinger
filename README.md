@@ -15,3 +15,13 @@ Twine Prototype in Twine version 2.2.1, Story Format SugarCube 2.21.0
 
 
 Longfinger is an interactive Story, meaning different endings depending on what you choose to do in the game.
+
+----
+
+[link for Twine prototype](./Prototype/Longfinger.html)
+
+![prototype](./Screenshots/prototype.png)
+
+----
+
+(C) Teto Gürel, Elena Sevignani, Sarah Loos
