@@ -18,8 +18,6 @@ Longfinger is an interactive Story, meaning different endings depending on what 
 
 ----
 
-[link for Twine prototype](./Prototype/Longfinger.html)
-
 ![prototype](./Screenshots/prototype.png)
 
 ----
