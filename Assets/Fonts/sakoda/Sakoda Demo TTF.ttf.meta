@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: b78e43045d77c482ca10951ba4134cbb
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: 'Sakoda '
+  fontNames:
+  - 'Sakoda '
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: ab474202707f9496f8e104194f714c77, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

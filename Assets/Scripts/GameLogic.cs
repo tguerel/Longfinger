@@ -12,103 +12,11 @@ using UnityEditor;
 public class GameLogic : MonoBehaviour
 {
 
-    public CanvasGroup img1;
-    public CanvasGroup img2;
-    public CanvasGroup img3;
-    public CanvasGroup img4;
-    public CanvasGroup img5;
-    public CanvasGroup img6;
-    public CanvasGroup img7;
-    public CanvasGroup img8;
-    public CanvasGroup img9;
+
     public CanvasGroup DoorCanvas;
     public CanvasGroup SignCanvas;
     public CanvasGroup DeathCanvas;
 
-    public void FadeIn1()
-    {
-        StartCoroutine(FadeCanvasGroup(img1, img1.alpha, 1));
-    }
-
-    public void FadeOut1()
-    {
-        StartCoroutine(FadeCanvasGroup(img1, img1.alpha, 0));
-    }
-
-    public void FadeIn2()
-    {
-        StartCoroutine(FadeCanvasGroup(img2, img2.alpha, 1));
-    }
-
-    public void FadeOut2()
-    {
-        StartCoroutine(FadeCanvasGroup(img2, img2.alpha, 0));
-    }
-    public void FadeIn3()
-    {
-        StartCoroutine(FadeCanvasGroup(img3, img3.alpha, 1));
-    }
-
-    public void FadeOut3()
-    {
-        StartCoroutine(FadeCanvasGroup(img3, img3.alpha, 0));
-    }
-    public void FadeIn4()
-    {
-        StartCoroutine(FadeCanvasGroup(img4, img4.alpha, 1));
-    }
-
-    public void FadeOut4()
-    {
-        StartCoroutine(FadeCanvasGroup(img4, img4.alpha, 0));
-    }
-
-    public void FadeIn5()
-    {
-        StartCoroutine(FadeCanvasGroup(img5, img5.alpha, 1));
-    }
-
-    public void FadeOut5()
-    {
-        StartCoroutine(FadeCanvasGroup(img5, img5.alpha, 0));
-    }
-
-    public void FadeIn6()
-    {
-        StartCoroutine(FadeCanvasGroup(img6, img6.alpha, 1));
-    }
-
-    public void FadeOut6()
-    {
-        StartCoroutine(FadeCanvasGroup(img6, img6.alpha, 0));
-    }
-    public void FadeIn7()
-    {
-        StartCoroutine(FadeCanvasGroup(img7, img7.alpha, 1));
-    }
-
-    public void FadeOut7()
-    {
-        StartCoroutine(FadeCanvasGroup(img7, img7.alpha, 0));
-    }
-    public void FadeIn8()
-    {
-        StartCoroutine(FadeCanvasGroup(img8, img8.alpha, 1));
-    }
-
-    public void FadeOut8()
-    {
-        StartCoroutine(FadeCanvasGroup(img8, img8.alpha, 0));
-    }
-    public void FadeIn9()
-    {
-        StartCoroutine(FadeCanvasGroup(img9, img9.alpha, 1));
-    }
-
-    public void FadeOut9()
-    {
-        StartCoroutine(FadeCanvasGroup(img9, img9.alpha, 0));
-    }
 
     public void FadeInDoor()
     {
@@ -145,15 +53,6 @@ public class GameLogic : MonoBehaviour
     {
         DoorCanvas.alpha = 0;
         SignCanvas.alpha = 0;
-        img1.alpha = 0;
-        img2.alpha = 0;
-        img3.alpha = 0;
-        img4.alpha = 0;
-        img5.alpha = 0;
-        img6.alpha = 0; 
-        img7.alpha = 0; 
-        img8.alpha = 0;
-        img9.alpha = 0;
         DeathCanvas.alpha = 0;
        
     }
@@ -291,29 +190,29 @@ public class GameLogic : MonoBehaviour
     public void ColdStreetScene()
     {
        
-        FadeIn1();
+
         text.text = "You haven’t eaten in days. You keep walking in search of anything edible " +
                 "or valuable you can change for some food. You notice a new shop in the street that’s " +
                 "usually busiest at this time, but right now there is not a single soul roaming the streets.  .\n\n" +
                     "Press Up to check it out, or Down to keep searching";
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore; FadeOut1(); }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet2; FadeOut1(); }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore; }
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet2;}
 
     }
     public void ColdStreet2Scene()
     {
        
-        FadeIn2();
+
         text.text = "You keep walking, still in search of food, but your hope is dwindling. .\n\n" +
                     "Press Up to keep walking, or Down to go back.";
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.coldstreet3; FadeOut2(); }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet; FadeOut2(); }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.coldstreet3;}
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet;}
     }
 
    public void ColdStreet3Scene()
     {
 
-        FadeIn3();
+    
 
         text.text = "You desperately keep searching for food," +
                 " or at least a place to spend the night. You " +
@@ -322,8 +221,8 @@ public class GameLogic : MonoBehaviour
                 " under your clothes and clutching onto your body. Suddenly, a" +
                 " faint light is shining up in the distance, it seems to be radiating warmth.." +
                 "Press Up to walk towards the light, or Down to go back.";
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.death; FadeOut3(); }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.goingback; FadeOut3(); }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.death; }
+        else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.goingback;  }
     }   
    public void GoingBack() {
 
