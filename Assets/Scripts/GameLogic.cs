@@ -140,6 +140,24 @@ public class GameLogic : MonoBehaviour
         StartCoroutine(FadeCanvasGroup(DeathCanvas, DeathCanvas.alpha, 0));
     }
 
+
+    public void ResetAlpha()
+    {
+        DoorCanvas.alpha = 0;
+        SignCanvas.alpha = 0;
+        img1.alpha = 0;
+        img2.alpha = 0;
+        img3.alpha = 0;
+        img4.alpha = 0;
+        img5.alpha = 0;
+        img6.alpha = 0; 
+        img7.alpha = 0; 
+        img8.alpha = 0;
+        img9.alpha = 0;
+        DeathCanvas.alpha = 0;
+       
+    }
+
     public IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, float lerpTime = 0.5f)
     {
 
@@ -163,6 +181,7 @@ public class GameLogic : MonoBehaviour
     }
 
     public Text text;
+    public CanvasGroup TextCanvas;
 
 
     private enum States
@@ -184,14 +203,10 @@ public class GameLogic : MonoBehaviour
     void Start()
     {
 
-        
+
         myState = States.coldstreet;
-        //FadeOutDoor();
-        // FadeOutSign();
-        DoorCanvas.alpha = 0;
-        SignCanvas.alpha = 0;
 
-
+        ResetAlpha();
 
     }
 
@@ -281,7 +296,7 @@ public class GameLogic : MonoBehaviour
                 "or valuable you can change for some food. You notice a new shop in the street that’s " +
                 "usually busiest at this time, but right now there is not a single soul roaming the streets.  .\n\n" +
                     "Press Up to check it out, or Down to keep searching";
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore; FadeOut1(); FadeInDoor(); }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore; FadeOut1(); }
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet2; FadeOut1(); }
 
     }
@@ -346,19 +361,22 @@ public class GameLogic : MonoBehaviour
     }
    public void OutsideStoreScene() {
 
+        FadeInDoor();
 
         text.text = "You walk towards the mysterious shop, that, at a second glance," +
             "looks like some sort of antique store." +
             "Click the door to enter, Down to read the sign.";
 
-        if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.sign; FadeInSign(); }
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.sign; }
+
         if (Input.GetButton("DoorButton")) { myState = States.store; }
     }
 
    public void SignText() {
 
-      
-       
+
+        FadeInSign();
+
         text.text = "You look up at the wooden sign which is painted in big, dark red letters." +
             "It says “Mr. M's Marvelous Antequities”. You wonder what the  “M” stands for." +
             "Click the door to enter, press Down to leave.";
@@ -368,7 +386,9 @@ public class GameLogic : MonoBehaviour
     }
 
     public void OutsideStoreFreezingScene() {
-        FadeInDoor();
+       
+         FadeInDoor();
+
         text.text = "You decide to go back. " +
             "You're freezing and time seems to be passing slower, " +
             "Click the door to enter";
@@ -377,16 +397,21 @@ public class GameLogic : MonoBehaviour
     }
 
    public void StoreScene() {
+
         text.text = "You enter the shop. " +
             "It feels warm and cozy in here and you see a " +
             "lot of candles dipping the room into a golden light." +
             "Press Up to explore the shop, or Down to Look for the owner.";
+
         if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.exploringstore; }
+
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.firstappearencemephis; }
     }
 
    public void ExploringScene()
+
     {
+
         text.text = "You wander through the shop, noticing it's shelves " +
             "are stacked with obscure objects in jars and a good deal of " +
             "mysterious chests standing around. You pass by an array of " +
@@ -410,22 +435,27 @@ public class GameLogic : MonoBehaviour
             "Press Up to talk to the owner, or Down to run away.";
        
        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.talking; }
+
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.ranaway; }
     }
 
    public  void RanOutside() {
         text.text = "You leave, still in search of food, but your hope is dwindling.\n" +
         	"Press Up to return to the store, or Down to keep walking.";
+
         if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.backagain; }
+
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet3; }
     }
 
    public void BackonceAgain() {
         text.text = "Once again you return to the antique store.\n" +
         	"Click the door to enter, or press Down to read the sign.";
+
          if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.sign; }
     }
    public  void HungryScene() {
+
         text.text = "Mephis gave you a kind smile and reached under " +
         	"counter just to bring forth a little elongated glass, " +
         	"filled with a pearly liquid. He held it in your direction. " +
@@ -434,6 +464,7 @@ public class GameLogic : MonoBehaviour
     }
 
     public void ThirstyScene() {
+
        text.text= "\"I know exactly what you need\"," +
              "Memphis said with a knowing smile and reached " +
              "under counter just to bring forth a little elongated " +
@@ -443,7 +474,8 @@ public class GameLogic : MonoBehaviour
 
     }
    public void DrinkingScene() {
-        text.text = "Mephisto begins to explain his further plans. \n\"Now, I have a deal for you." +
+
+    text.text = "Mephisto begins to explain his further plans. \n\"Now, I have a deal for you." +
             " You stay with me and fulfil tasks i give you, and I gift you two meals a day," +
             " as well as a place to sleep until you are old enough to look after yourself.\"\n\n" +
             "A wave of gratitude washes over you in the face of an actual home, but soon you realize " +
@@ -455,6 +487,7 @@ public class GameLogic : MonoBehaviour
     }
 
    public void DrankpotionScene() {
+
         text.text = "The fluid was warm and you noticed a rather distinct taste of " +
             "cinnamon topped rice pudding. \n As you hand him the back the glass you" +
             "realise your hunger has disappeared. Mephisto begins to explain his further plans." +
@@ -465,6 +498,7 @@ public class GameLogic : MonoBehaviour
         // Click 'Learn about the deal'
     }
    public void DealScene() {
+
         text.text = "You calm yourself down, you can always escape him if he seems suspicious.\n" +
             "You decide to give him a reassuring nod. \nSo he begins to explain. \"I will make you my apprentice." +
             " You will be my little thief and get me objects I will tell you about later on.\n" +
@@ -477,12 +511,14 @@ public class GameLogic : MonoBehaviour
         // wait 3 seconds, fade into next img
     }
    public void MorningScene() {
+
         text.text = "You are woken by the bell at the shop door " +
             "ringing cheerfully as another costumer exits.\n";
 
         //Press Down to go downstairs
     }
    public void DownstairsScene() {
+
         text.text= "You meet Mr. Mephis at the counter. " +
         	"\"Ah, there you are <<print $name>>. Here, you don't " +
         	"have a lot of time today, since you've taken your sweet time sleeping.\"" +
