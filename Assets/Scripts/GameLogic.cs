@@ -12,14 +12,17 @@ using UnityEditor;
 public class GameLogic : MonoBehaviour
 {
 
-
+    // CanvasGroups (Set up in Inspector)
     public CanvasGroup DoorCanvas;
     public CanvasGroup SignCanvas;
     public CanvasGroup DeathCanvas;
     public CanvasGroup OpeningCanvas;
     public CanvasGroup OutStoreCanvas;
+    public CanvasGroup InStoreCanvas;
 
-    public void FadeInOpening()
+    //called methods for fading between Scene Images 
+
+   /* public void FadeInOpening()
     {
         StartCoroutine(FadeCanvasGroup(OutStoreCanvas, OutStoreCanvas.alpha, 1));
     }
@@ -69,17 +72,7 @@ public class GameLogic : MonoBehaviour
         StartCoroutine(FadeCanvasGroup(DeathCanvas, DeathCanvas.alpha, 0));
     }
 
-
-    public void ResetAlpha()
-    {
-        DoorCanvas.alpha = 0;
-        SignCanvas.alpha = 0;
-        DeathCanvas.alpha = 0;
-        OutStoreCanvas.alpha = 0;
-       //OpeningCanvas.alpha = 0;
-       
-    }
-
+    // Fading a canvasgroup 
     public IEnumerator FadeCanvasGroup(CanvasGroup cg, float start, float end, float lerpTime = 0.5f)
     {
 
@@ -101,11 +94,11 @@ public class GameLogic : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
+    */
 
     public Text text;
-    public CanvasGroup TextCanvas;
 
-
+    //States
     private enum States
     {
         coldstreet, coldstreet2, coldstreet3, death, goingback, outsidestore, outsidestorefreezing,
@@ -116,11 +109,23 @@ public class GameLogic : MonoBehaviour
 
     private States myState;
 
+    //Bools relevant for gameplay
+
     public bool bagtoggle;
     public bool visitedgarden;
     public bool visitedcountrylane;
     public bool waited;
 
+    //Resetting all Scene Image Opacity to Zero
+    public void ResetAlpha()
+    {
+        DoorCanvas.alpha = 0;
+        SignCanvas.alpha = 0;
+        DeathCanvas.alpha = 0;
+        OutStoreCanvas.alpha = 0;
+        //OpeningCanvas.alpha = 0;
+
+    }
 
     void Start()
     {
@@ -139,7 +144,7 @@ public class GameLogic : MonoBehaviour
 
         print(myState);
 
-               
+         //Call method according to state      
         switch (myState) {
             case States.coldstreet:
                 ColdStreetScene();
@@ -209,19 +214,21 @@ public class GameLogic : MonoBehaviour
     }
 
 
+    //methods called according to state
    
 
     public void ColdStreetScene()
     {
 
-        FadeInOpening();
+        // FadeInOpening();
+        OpeningCanvas.alpha = 1;
         text.text = "You haven’t eaten in days. You keep walking in search of anything edible " +
                 "or valuable you can change for some food. You notice a new shop in the street that’s " +
                 "usually busiest at this time, but right now there is not a single soul roaming the streets.\n\n" +
                     "Press Up to check it out, or Down to keep searching";
         if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore;
-            FadeInDoor();
-            FadeInStoreOut();
+            //FadeInDoor();
+           // FadeInStoreOut();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet2;}
 
@@ -229,8 +236,14 @@ public class GameLogic : MonoBehaviour
     public void ColdStreet2Scene()
     {
 
-        FadeOutOpening();
-        text.text = "You keep walking, still in search of food, but your hope is dwindling. .\n\n" +
+        //  FadeOutOpening();
+        OpeningCanvas.alpha = 0;
+        OutStoreCanvas.alpha = 0;
+        DoorCanvas.alpha = 0;
+        DoorCanvas.interactable = false;
+        SignCanvas.alpha = 0;
+
+        text.text = "You keep walking, still in search of food, but your hope is dwindling.\n\n" +
                     "Press Up to keep walking, or Down to go back.";
         if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.coldstreet3;}
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet;}
@@ -240,7 +253,9 @@ public class GameLogic : MonoBehaviour
     {
 
 
-        FadeOutOpening();
+        // FadeOutOpening();
+        OpeningCanvas.alpha = 0;
+
         text.text = "You desperately keep searching for food," +
                 " or at least a place to spend the night. You " +
                 "see the sun setting in the distance and soon the" +
@@ -252,13 +267,17 @@ public class GameLogic : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.goingback;  }
     }   
    public void GoingBack() {
-       
-         FadeInOpening();
+
+        //FadeInOpening();
+        OpeningCanvas.alpha = 1;
+
        text.text = "You decide to go back since there isn't much to lose. You're on the main street again.\n" +
         	"Press Up to check out the store.";
         if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            FadeInDoor();
-            FadeInStoreOut(); 
+            //FadeInDoor();
+
+
+            //FadeInStoreOut(); 
             myState = States.outsidestore; 
         
         }
@@ -266,7 +285,7 @@ public class GameLogic : MonoBehaviour
 
     public void DeathScene() {
 
-       
+        DeathCanvas.alpha = 1;
         text.fontSize = 25;
         text.text = "As the white light comes closer and closer, " +
             "your shivers die down and you feel a welcoming warmth" +
@@ -275,9 +294,7 @@ public class GameLogic : MonoBehaviour
             "The further you walk towards this mysterious source of light; " +
             "that brings you utter joy and tranquility just by looking at it, " +
             "the lighter you feel; the less your surroundings matter." +
-            "You can't seem to reach it though. You notice a familiar voice calling your name:\n \"" +
-            "name.\n" +
-            "name!\n" + "\"" +
+            "You can't seem to reach it though. You notice a familiar voice calling your name.\n\n" +
             "The voice floods your mind with memories of a lost loved one," +
             "for years you yearned to hear it just one more time." +
             "Your heart swells and you are greeted with absolute euphoria." +
@@ -293,10 +310,14 @@ public class GameLogic : MonoBehaviour
     }
    public void OutsideStoreScene() {
 
-        FadeOutOpening();
+        //FadeOutOpening();
+        OpeningCanvas.alpha = 0;
         //FadeInStoreOut();
-       //FadeInDoor();
+        OutStoreCanvas.alpha = 1;
+        //FadeInDoor();
 
+        DoorCanvas.alpha = 1;
+        DoorCanvas.interactable = true;
 
         text.text = "You walk towards the mysterious shop, that, at a second glance," +
             "looks like some sort of antique store." +
@@ -310,7 +331,8 @@ public class GameLogic : MonoBehaviour
    public void SignText() {
 
 
-        FadeInSign();
+        //FadeInSign();
+        SignCanvas.alpha = 1;
 
         text.text = "You look up at the wooden sign which is painted in big, dark red letters." +
             "It says “Mr. M's Marvelous Antequities”. You wonder what the  “M” stands for." +
@@ -321,8 +343,10 @@ public class GameLogic : MonoBehaviour
     }
 
     public void OutsideStoreFreezingScene() {
-       
-       
+
+        OutStoreCanvas.alpha = 1;
+        DoorCanvas.alpha = 1;
+        DoorCanvas.interactable = true;
         text.text = "You decide to go back. " +
             "You're freezing and time seems to be passing slower, " +
             "Click the door to enter";
@@ -331,10 +355,14 @@ public class GameLogic : MonoBehaviour
     }
 
    public void StoreScene() {
-        FadeOutDoor();
-        FadeOutSign();
-        FadeOutStoreOut();
-         text.text = "You enter the shop. " +
+        //FadeOutDoor();
+        DoorCanvas.alpha = 0;
+        DoorCanvas.interactable = false;
+        //FadeOutSign();
+        SignCanvas.alpha = 0;
+        // FadeOutStoreOut();
+        OutStoreCanvas.alpha = 0;
+        text.text = "You enter the shop. " +
             "It feels warm and cozy in here and you see a " +
             "lot of candles dipping the room into a golden light." +
             "Press Up to explore the shop, or Down to Look for the owner.";
@@ -376,6 +404,8 @@ public class GameLogic : MonoBehaviour
     }
 
    public  void RanOutside() {
+        
+        OpeningCanvas.alpha = 1;
         text.text = "You leave, still in search of food, but your hope is dwindling.\n" +
         	"Press Up to return to the store, or Down to keep walking.";
 
@@ -385,6 +415,10 @@ public class GameLogic : MonoBehaviour
     }
 
    public void BackonceAgain() {
+        OutStoreCanvas.alpha = 1;
+        DoorCanvas.alpha = 1;
+        DoorCanvas.interactable = true;
+
         text.text = "Once again you return to the antique store.\n" +
         	"Click the door to enter, or press Down to read the sign.";
 
