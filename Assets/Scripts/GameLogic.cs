@@ -16,7 +16,28 @@ public class GameLogic : MonoBehaviour
     public CanvasGroup DoorCanvas;
     public CanvasGroup SignCanvas;
     public CanvasGroup DeathCanvas;
+    public CanvasGroup OpeningCanvas;
+    public CanvasGroup OutStoreCanvas;
 
+    public void FadeInOpening()
+    {
+        StartCoroutine(FadeCanvasGroup(OutStoreCanvas, OutStoreCanvas.alpha, 1));
+    }
+
+    public void FadeOutOpening()
+    {
+        StartCoroutine(FadeCanvasGroup(OutStoreCanvas, OutStoreCanvas.alpha, 0));
+    }
+
+    public void FadeInStoreOut()
+    {
+        StartCoroutine(FadeCanvasGroup(OpeningCanvas, OpeningCanvas.alpha, 1));
+    }
+
+    public void FadeOutStoreOut()
+    {
+        StartCoroutine(FadeCanvasGroup(OpeningCanvas, OpeningCanvas.alpha, 0));
+    }
 
     public void FadeInDoor()
     {
@@ -54,6 +75,8 @@ public class GameLogic : MonoBehaviour
         DoorCanvas.alpha = 0;
         SignCanvas.alpha = 0;
         DeathCanvas.alpha = 0;
+        OutStoreCanvas.alpha = 0;
+       //OpeningCanvas.alpha = 0;
        
     }
 
@@ -106,6 +129,7 @@ public class GameLogic : MonoBehaviour
         myState = States.coldstreet;
 
         ResetAlpha();
+        //FadeInOpening();
 
     }
 
@@ -189,20 +213,23 @@ public class GameLogic : MonoBehaviour
 
     public void ColdStreetScene()
     {
-       
 
+        FadeInOpening();
         text.text = "You haven’t eaten in days. You keep walking in search of anything edible " +
                 "or valuable you can change for some food. You notice a new shop in the street that’s " +
-                "usually busiest at this time, but right now there is not a single soul roaming the streets.  .\n\n" +
+                "usually busiest at this time, but right now there is not a single soul roaming the streets.\n\n" +
                     "Press Up to check it out, or Down to keep searching";
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore; }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore;
+            FadeInDoor();
+            FadeInStoreOut();
+        }
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet2;}
 
     }
     public void ColdStreet2Scene()
     {
-       
 
+        FadeOutOpening();
         text.text = "You keep walking, still in search of food, but your hope is dwindling. .\n\n" +
                     "Press Up to keep walking, or Down to go back.";
         if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.coldstreet3;}
@@ -212,8 +239,8 @@ public class GameLogic : MonoBehaviour
    public void ColdStreet3Scene()
     {
 
-    
 
+        FadeOutOpening();
         text.text = "You desperately keep searching for food," +
                 " or at least a place to spend the night. You " +
                 "see the sun setting in the distance and soon the" +
@@ -225,10 +252,16 @@ public class GameLogic : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.goingback;  }
     }   
    public void GoingBack() {
-
+       
+         FadeInOpening();
        text.text = "You decide to go back since there isn't much to lose. You're on the main street again.\n" +
         	"Press Up to check out the store.";
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { myState = States.outsidestore; }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            FadeInDoor();
+            FadeInStoreOut(); 
+            myState = States.outsidestore; 
+        
+        }
     }
 
     public void DeathScene() {
@@ -260,7 +293,10 @@ public class GameLogic : MonoBehaviour
     }
    public void OutsideStoreScene() {
 
-        FadeInDoor();
+        FadeOutOpening();
+        //FadeInStoreOut();
+       //FadeInDoor();
+
 
         text.text = "You walk towards the mysterious shop, that, at a second glance," +
             "looks like some sort of antique store." +
@@ -280,14 +316,13 @@ public class GameLogic : MonoBehaviour
             "It says “Mr. M's Marvelous Antequities”. You wonder what the  “M” stands for." +
             "Click the door to enter, press Down to leave.";
          if (Input.GetKeyDown(KeyCode.DownArrow)) { myState = States.coldstreet2; }
-        if (Input.GetButton("DoorButton")) { myState = States.store; }
+        if (Input.GetButton("DoorButton")) { myState = States.store;  }
 
     }
 
     public void OutsideStoreFreezingScene() {
        
-         FadeInDoor();
-
+       
         text.text = "You decide to go back. " +
             "You're freezing and time seems to be passing slower, " +
             "Click the door to enter";
@@ -296,8 +331,10 @@ public class GameLogic : MonoBehaviour
     }
 
    public void StoreScene() {
-
-        text.text = "You enter the shop. " +
+        FadeOutDoor();
+        FadeOutSign();
+        FadeOutStoreOut();
+         text.text = "You enter the shop. " +
             "It feels warm and cozy in here and you see a " +
             "lot of candles dipping the room into a golden light." +
             "Press Up to explore the shop, or Down to Look for the owner.";
